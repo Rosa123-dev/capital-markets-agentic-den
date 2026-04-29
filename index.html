@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capital Markets AI Agenda</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', sans-serif; color: #333; background: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    .ticker-bar { background: #1a1f3c; color: #fff; padding: 8px 0; overflow: hidden; font-size: 0.82rem; }
+    .ticker-track { display: flex; gap: 3rem; animation: ticker 35s linear infinite; width: max-content; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item { display: flex; align-items: center; gap: 0.6rem; white-space: nowrap; }
+    .t-label { color: #8892b0; font-size: 0.78rem; }
+    .t-val { color: #fff; font-weight: 600; }
+    .t-tag { background: rgba(167,139,250,0.2); color: #a78bfa; font-size: 0.72rem; padding: 1px 7px; border-radius: 20px; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 40px; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; transition: box-shadow 0.3s; }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .logo { font-size: 1.2rem; font-weight: 700; color: #1a1f3c; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg, #1a1f3c, #6c47d4); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+    .logo span { color: #a78bfa; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.88rem; color: #555; font-weight: 500; position: relative; padding-bottom: 2px; transition: color 0.2s; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #a78bfa; transition: width 0.25s; }
+    .nav-links a:hover { color: #1a1f3c; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { background: linear-gradient(135deg, #1a1f3c, #6c47d4); color: #fff; border: none; padding: 9px 22px; border-radius: 25px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+    .hero { position: relative; min-height: 540px; background: #eef2fa; overflow: hidden; display: flex; align-items: center; }
+    .hero-gradient { position: absolute; top: 0; right: 0; bottom: 0; width: 68%; background: linear-gradient(135deg, #1a1f3c 0%, #3b1f6e 45%, #6c47d4 100%); clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%); }
+    .particle { position: absolute; border-radius: 50%; opacity: 0.15; background: #fff; animation: floatUp linear infinite; }
+    @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0.15; } 50% { opacity: 0.28; } 100% { transform: translateY(-560px) rotate(360deg); opacity: 0; } }
+    .hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; width: 100%; align-items: center; }
+    .hero-left { padding: 60px 20px 60px 80px; }
+    .hero-eyebrow { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: #a78bfa; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.6s 0.1s forwards; }
+    .hero-left h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.15; color: #1a1f3c; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
+    .hero-left h1 span { color: #7c3aed; }
+    .hero-left > p { font-size: 0.92rem; color: #666; line-height: 1.75; margin-bottom: 28px; max-width: 440px; opacity: 0; animation: fadeUp 0.7s 0.4s forwards; }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s 0.55s forwards; }
+    .badge { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #e0e6ff; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; color: #3a5bd9; }
+    .badge svg { width: 14px; height: 14px; stroke: #3a5bd9; fill: none; stroke-width: 2; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .hero-right { display: flex; align-items: center; justify-content: center; padding: 40px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
+    .ian-card { background: rgba(255,255,255,0.96); border-radius: 16px; padding: 28px; width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.22); }
+    .ian-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
+    .ian-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #1a1f3c, #6c47d4); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .ian-name { font-weight: 700; font-size: 1rem; color: #1a1f3c; }
+    .ian-title { font-size: 0.78rem; color: #888; margin-top: 2px; }
+    .ian-mission-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #3a5bd9; margin-bottom: 8px; }
+    .ian-mission-text { font-size: 0.84rem; color: #555; line-height: 1.65; font-style: italic; }
+    .ian-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+    .ian-stat { background: #f5f7ff; border-radius: 8px; padding: 10px 12px; text-align: center; }
+    .ian-stat-num { font-size: 1.3rem; font-weight: 700; color: #3a5bd9; }
+    .ian-stat-label { font-size: 0.72rem; color: #888; margin-top: 2px; }
+    .counters-section { padding: 50px 80px; background: #f7f9ff; border-top: 1px solid #e8eeff; border-bottom: 1px solid #e8eeff; }
+    .counters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+    .counter-item { padding: 20px; }
+    .counter-num { font-size: 2.4rem; font-weight: 700; color: #1a1f3c; line-height: 1; }
+    .counter-num span { color: #7c3aed; }
+    .counter-label { font-size: 0.8rem; color: #888; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+    .what-section { padding: 80px; background: #fff; }
+    .what-intro { max-width: 700px; margin: 0 auto 56px; text-align: center; }
+    .what-intro h2 { font-size: 2rem; font-weight: 700; color: #1a1f3c; margin-bottom: 14px; }
+    .what-intro .highlight { font-size: 0.95rem; font-weight: 600; color: #3a5bd9; margin-bottom: 14px; }
+    .what-intro p { font-size: 0.9rem; color: #666; line-height: 1.75; }
+    .placeholder-note { display: inline-flex; align-items: center; gap: 6px; background: #fff8e1; border: 1px dashed #f5a623; border-radius: 6px; padding: 6px 12px; font-size: 0.78rem; color: #b8860b; margin-top: 16px; }
+    .goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .goal-card { background: #fff; border: 1.5px solid #e8eeff; border-radius: 14px; padding: 28px 22px; text-align: center; cursor: pointer; transition: all 0.25s; position: relative; overflow: hidden; }
+    .goal-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(58,91,217,0.14); border-color: #3a5bd9; }
+    .goal-card.active { border-color: #7c3aed; box-shadow: 0 14px 36px rgba(124,58,237,0.18); }
+    .goal-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; transition: transform 0.25s; }
+    .goal-card:hover .goal-icon, .goal-card.active .goal-icon { transform: scale(1.1) rotate(4deg); }
+    .goal-icon svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .goal-card h3 { font-size: 0.95rem; font-weight: 700; color: #1a1f3c; margin-bottom: 10px; }
+    .goal-card p { font-size: 0.82rem; color: #777; line-height: 1.65; }
+    .goal-number { position: absolute; top: 14px; right: 16px; font-size: 1.8rem; font-weight: 800; color: #e8eeff; line-height: 1; }
+    .gap-section { padding: 70px 80px; background: #f7f9ff; border-top: 1px solid #e8eeff; }
+    .gap-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .gap-text h2 { font-size: 1.8rem; font-weight: 700; color: #1a1f3c; margin-bottom: 12px; }
+    .gap-text p { font-size: 0.9rem; color: #666; line-height: 1.75; margin-bottom: 28px; }
+    .skill-levels { display: flex; flex-direction: column; gap: 10px; }
+    .skill-level { border-radius: 10px; padding: 14px 18px; }
+    .skill-level.l1 { background: #e8eeff; border-left: 4px solid #9ab0f0; }
+    .skill-level.l2 { background: #c8d4f8; border-left: 4px solid #5b7fff; }
+    .skill-level.l3 { background: #3a5bd9; border-left: 4px solid #1a1f3c; }
+    .skill-level h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 3px; }
+    .skill-level.l1 h4, .skill-level.l2 h4 { color: #1a1f3c; }
+    .skill-level.l3 h4 { color: #e8f0ff; }
+    .skill-level p { font-size: 0.78rem; margin: 0; line-height: 1.4; }
+    .skill-level.l1 p, .skill-level.l2 p { color: #444; }
+    .skill-level.l3 p { color: #c0d0f8; }
+    .skill-goal-arrow { text-align: right; font-size: 0.75rem; font-weight: 700; color: #3a5bd9; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+    .gap-workshops h3 { font-size: 1.1rem; font-weight: 700; color: #1a1f3c; margin-bottom: 20px; }
+    .workshop-step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 22px; }
+    .ws-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .ws-num.c1 { background: #1a1f3c; } .ws-num.c2 { background: #6c47d4; } .ws-num.c3 { background: #9b7fe8; }
+    .ws-body h4 { font-size: 0.88rem; font-weight: 700; color: #1a1f3c; margin-bottom: 4px; }
+    .ws-body p { font-size: 0.8rem; color: #777; line-height: 1.6; }
+    .timeline-section { padding: 70px 80px; background: #f3f0ff; border-top: 1px solid #e4daff; position: relative; overflow: hidden; }
+    .timeline-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #c4b5fd, #8b5cf6, #6d28d9, #8b5cf6, #a78bfa); }
+    .timeline-section h2 { font-size: 1.8rem; font-weight: 700; color: #1a1f3c; margin-bottom: 8px; text-align: center; }
+    .tl-sub { font-size: 0.88rem; color: #888; text-align: center; margin-bottom: 52px; }
+    .timeline-wrap { max-width: 1040px; margin: 0 auto; }
+    .tl-cards { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; position: relative; }
+    .tl-cards::before { content: ''; position: absolute; top: 28px; left: 4%; right: 4%; height: 2px; background: linear-gradient(90deg, #c4b5fd 0%, #8b5cf6 42%, #7c3aed 100%); z-index: 0; }
+    .tl-card { background: #fff; border-radius: 12px; padding: 18px 10px 14px; text-align: center; position: relative; z-index: 1; border: 1.5px solid #e4daff; transition: transform 0.2s, box-shadow 0.2s; }
+    .tl-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(109,40,217,0.12); border-color: #c4b5fd; }
+    .tl-card.is-den { border-color: #8b5cf6; background: linear-gradient(160deg, #f5f0ff, #ede9fe); }
+    .tl-card.is-final { border-color: #6d28d9; background: linear-gradient(160deg, #ede9fe, #ddd6fe); }
+    .tl-node-circle { width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; }
+    .tl-node-circle svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; }
+    .tl-card-tag { font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 7px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+    .tl-card-tag.co { background: #ede9fe; color: #6d28d9; }
+    .tl-card-tag.cl { background: #f0ebff; color: #7c3aed; }
+    .tl-card-tag.den { background: #ddd6fe; color: #5b21b6; }
+    .tl-card-date { font-size: 0.72rem; font-weight: 700; color: #1a1f3c; letter-spacing: 0.2px; }
+    .tl-card-name { font-size: 0.65rem; color: #888; margin-top: 3px; line-height: 1.4; }
+    .tl-card.is-den .tl-card-date, .tl-card.is-final .tl-card-date { color: #5b21b6; }
+    .tl-card.is-final .tl-card-name { color: #7c3aed; font-weight: 600; }
+    .sessions-section { padding: 70px 80px; background: #f7f9ff; border-top: 1px solid #e8eeff; }
+    .section-eyebrow { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: #a78bfa; text-align: center; margin-bottom: 10px; }
+    .section-title { font-size: 2rem; font-weight: 700; color: #1a1f3c; text-align: center; margin-bottom: 10px; }
+    .section-sub { font-size: 0.88rem; color: #888; text-align: center; max-width: 520px; margin: 0 auto 56px; line-height: 1.7; }
+    .sessions-block { margin-bottom: 60px; }
+    .sessions-block:last-child { margin-bottom: 0; }
+    .tool-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+    .tool-icon { width: 44px; height: 44px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; }
+    .tool-icon.copilot { background: linear-gradient(135deg, #0078d4, #00b4f0); color: #fff; }
+    .tool-icon.claude { background: linear-gradient(135deg, #1a1f3c, #6c47d4); color: #fff; }
+    .tool-title { font-size: 1.3rem; font-weight: 700; color: #1a1f3c; }
+    .tool-subtitle { font-size: 0.8rem; color: #888; margin-top: 2px; }
+    .cards-row { position: relative; display: grid; gap: 24px; }
+    .cards-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .cards-row.cols-5 { grid-template-columns: repeat(5, 1fr); }
+    .arrows-svg { position: absolute; top: 38px; left: 0; right: 0; width: 100%; height: 60px; pointer-events: none; }
+    .session-card-new { background: #fff; border: 1px solid #e8eeff; border-radius: 14px; padding: 28px 20px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.05); transition: transform 0.25s, box-shadow 0.25s; position: relative; }
+    .session-card-new.open { cursor: pointer; border-color: #c4b5fd; }
+    .session-card-new.open:hover { transform: translateY(-6px); box-shadow: 0 14px 36px rgba(124,58,237,0.16); }
+    .session-card-new.locked { background: #fafafa; cursor: default; }
+    .session-card-new.agentic { border-style: dashed; border-color: #d4c8ff; background: #fdfcff; }
+    .card-icon-wrap { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .card-icon-wrap svg { width: 30px; height: 30px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .session-card-new h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 8px; }
+    .session-card-new.open h3 { color: #6d28d9; }
+    .session-card-new.locked h3 { color: #bbb; }
+    .session-card-new.agentic h3 { color: #6c47d4; }
+    .session-card-new p { font-size: 0.78rem; line-height: 1.55; }
+    .session-card-new.open p { color: #666; }
+    .session-card-new.locked p { color: #ccc; }
+    .session-card-new.agentic p { color: #9b85d8; }
+    .lock-badge { position: absolute; top: 12px; right: 12px; display: flex; align-items: center; gap: 4px; font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+    .lock-badge.open-b { background: #ede9fe; color: #6d28d9; }
+    .lock-badge.locked-b { background: #f5f5f5; color: #bbb; }
+    .lock-badge.agentic-b { background: #f0eeff; color: #6c47d4; }
+    .lock-badge svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+    .unlock-note { text-align: center; margin-top: 20px; font-size: 0.78rem; color: #b0b0b0; font-style: italic; }
+    .roi-section { padding: 70px 80px; background: #fff; border-top: 1px solid #f0f0f0; }
+    .roi-inner { max-width: 1000px; margin: 0 auto; }
+    .roi-inner h2 { font-size: 1.8rem; font-weight: 700; color: #1a1f3c; margin-bottom: 8px; }
+    .roi-inner > p { font-size: 0.9rem; color: #666; line-height: 1.7; margin-bottom: 36px; max-width: 560px; }
+    .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .roi-card { border: 1.5px dashed #c0caf5; border-radius: 12px; padding: 24px 20px; background: #f9faff; transition: border-color 0.2s, transform 0.2s; }
+    .roi-card:hover { border-color: #3a5bd9; transform: translateY(-3px); }
+    .roi-card h3 { font-size: 0.95rem; font-weight: 700; color: #1a1f3c; margin-bottom: 10px; }
+    .roi-card p { font-size: 0.82rem; color: #777; line-height: 1.65; }
+    .tracker-section { padding: 60px 80px; background: #f7f9ff; border-top: 1px solid #e8eeff; }
+    .tracker-inner { max-width: 800px; margin: 0 auto; }
+    .tracker-inner h2 { font-size: 1.6rem; font-weight: 700; color: #1a1f3c; margin-bottom: 10px; }
+    .tracker-inner > p { font-size: 0.88rem; color: #666; line-height: 1.7; margin-bottom: 28px; max-width: 560px; }
+    .tracker-card { background: #fff; border: 1.5px dashed #c0caf5; border-radius: 14px; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .tracker-card:hover { border-color: #3a5bd9; box-shadow: 0 6px 24px rgba(58,91,217,0.1); }
+    .tracker-card-left { display: flex; align-items: center; gap: 18px; }
+    .tracker-icon { width: 52px; height: 52px; background: linear-gradient(135deg, #1e7145, #2ea860); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tracker-icon svg { width: 26px; height: 26px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .tracker-text h3 { font-size: 1rem; font-weight: 700; color: #1a1f3c; margin-bottom: 4px; }
+    .tracker-text p { font-size: 0.82rem; color: #888; line-height: 1.5; margin: 0; }
+    .tracker-btn { background: linear-gradient(135deg, #1e7145, #2ea860); color: #fff; border: none; padding: 10px 22px; border-radius: 25px; font-size: 0.84rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: opacity 0.2s, transform 0.2s; flex-shrink: 0; }
+    .tracker-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .tracker-placeholder-note { margin-top: 14px; display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #b8860b; background: #fff8e1; border: 1px dashed #f5a623; border-radius: 6px; padding: 8px 14px; }
+    .beyond-section { background: linear-gradient(135deg, #0d0f1e 0%, #1a1f3c 40%, #3b1f6e 70%, #6c47d4 100%); padding: 80px; color: #fff; }
+    .beyond-section .section-eyebrow { color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+    .beyond-section .section-title { color: #fff; margin-bottom: 14px; }
+    .beyond-section .section-sub { color: rgba(255,255,255,0.7); margin-bottom: 56px; }
+    .beyond-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1000px; margin: 0 auto; }
+    .beyond-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 28px 24px; transition: background 0.25s, transform 0.25s; }
+    .beyond-card:hover { background: rgba(255,255,255,0.14); transform: translateY(-4px); }
+    .beyond-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .beyond-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 1.8; }
+    .beyond-card h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+    .beyond-card p { font-size: 0.82rem; opacity: 0.72; line-height: 1.65; color: #fff; }
+    .beyond-cta { text-align: center; margin-top: 48px; }
+    .beyond-cta p { font-size: 0.9rem; opacity: 0.65; font-style: italic; }
+    .brought-section { padding: 70px 80px; background: #fff; border-top: 1px solid #f0f0f0; }
+    .brought-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .brought-inner .section-eyebrow { margin-bottom: 10px; }
+    .brought-inner h2 { font-size: 1.8rem; font-weight: 700; color: #1a1f3c; margin-bottom: 14px; }
+    .brought-inner > p { font-size: 0.9rem; color: #888; line-height: 1.7; max-width: 560px; margin: 0 auto 48px; }
+    .partners-row { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+    .partner-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .partner-logo-box { width: 160px; height: 72px; border: 1.5px dashed #c0caf5; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #f7f9ff; transition: border-color 0.2s; }
+    .partner-logo-box:hover { border-color: #3a5bd9; }
+    .partner-logo-box span { font-size: 0.8rem; color: #bbb; font-style: italic; }
+    .partner-name { font-size: 0.78rem; color: #aaa; }
+    .partner-divider { width: 1px; height: 60px; background: #e8eeff; }
+    .brought-note { margin-top: 36px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #b8860b; background: #fff8e1; border: 1px dashed #f5a623; border-radius: 6px; padding: 8px 14px; }
+    footer { padding: 50px 80px 30px; background: #fff; border-top: 1px solid #f0f0f0; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 30px; }
+    .footer-logo { font-size: 1.1rem; font-weight: 700; color: #1a1f3c; margin-bottom: 14px; display: block; }
+    .footer-logo span { color: #00c9a7; }
+    .footer-brand p { font-size: 0.82rem; color: #888; line-height: 1.7; margin-bottom: 14px; }
+    .footer-brand .copy { font-size: 0.78rem; color: #bbb; }
+    footer h4 { font-size: 0.88rem; font-weight: 700; color: #1a1f3c; margin-bottom: 16px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 10px; }
+    footer ul a { font-size: 0.84rem; color: #777; transition: color 0.2s, padding-left 0.2s; display: inline-block; }
+    footer ul a:hover { color: #1a1f3c; padding-left: 4px; }
+    .social-icons { display: flex; gap: 10px; margin-top: 4px; }
+    .soc { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .soc:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+    .soc.li { background: #0a66c2; } .soc.ms { background: #0078d4; } .soc.em { background: #3a5bd9; }
+    .footer-bottom { border-top: 1px solid #f0f0f0; padding-top: 20px; text-align: center; font-size: 0.78rem; color: #bbb; margin-top: 20px; }
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .toast { position: fixed; bottom: 32px; right: 32px; z-index: 999; background: #1a1f3c; color: #fff; padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.18); transform: translateY(80px); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-accent { color: #00c9a7; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<nav id="mainNav">
+  <div class="logo">
+    <div class="logo-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+    Capital Markets <span>&nbsp;Agenda</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#gap">The Gap</a></li>
+    <li><a href="#sessions">Sessions</a></li>
+    <li><a href="#tracker">Tracker</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta">Get Access</button>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="hero-gradient" id="heroGradient"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Capital Markets &bull; AI Transformation</div>
+      <h1>The <span>AI Agenda</span> for Capital Markets</h1>
+      <p>Capital Markets has a knowledge and application gap — our people aren't using agentic AI day-to-day, and it's showing up in how we serve clients. This programme closes that gap.</p>
+      <div class="hero-badges">
+        <div class="badge"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Copilot</div>
+        <div class="badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> Claude</div>
+        <div class="badge"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 6 Sessions</div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="ian-card">
+        <div class="ian-card-top">
+          <div class="ian-avatar">IK</div>
+          <div>
+            <div class="ian-name">Ian K.</div>
+            <div class="ian-title">Capital Markets AI Lead &bull; Programme Director</div>
+          </div>
+        </div>
+        <div class="ian-mission-label">Mission Statement</div>
+        <div class="ian-mission-text">"To accelerate AI adoption across capital markets by giving every practitioner a clear, practical path from curiosity to capability — grounded in real tools, real workflows, and real outcomes."</div>
+        <div class="ian-stats">
+          <div class="ian-stat"><div class="ian-stat-num">6</div><div class="ian-stat-label">Sessions</div></div>
+          <div class="ian-stat"><div class="ian-stat-num">2</div><div class="ian-stat-label">Platforms</div></div>
+          <div class="ian-stat"><div class="ian-stat-num">2</div><div class="ian-stat-label">Agentic Labs</div></div>
+          <div class="ian-stat"><div class="ian-stat-num">1</div><div class="ian-stat-label">Live Tracker</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="counters-section">
+  <div class="counters-grid">
+    <div class="counter-item reveal"><div class="counter-num" data-target="6" data-suffix="" data-prefix="">0</div><div class="counter-label">Total Sessions</div></div>
+    <div class="counter-item reveal" style="transition-delay:0.1s"><div class="counter-num" data-target="2" data-suffix="" data-prefix="">0</div><div class="counter-label">AI Platforms</div></div>
+    <div class="counter-item reveal" style="transition-delay:0.2s"><div class="counter-num" data-target="2" data-suffix="" data-prefix="">0</div><div class="counter-label">Agentic Labs</div></div>
+    <div class="counter-item reveal" style="transition-delay:0.3s"><div class="counter-num" data-target="100" data-suffix="%" data-prefix="">0<span>%</span></div><div class="counter-label">Hands-On</div></div>
+  </div>
+</section>
+
+<section class="what-section" id="about">
+  <div class="what-intro reveal">
+    <h2>What is the Capital Markets Agenda?</h2>
+    <p class="highlight">A practitioner-first AI learning journey built specifically for capital markets professionals.</p>
+    <p>The Capital Markets Agenda takes individuals and teams from foundational AI awareness through to hands-on agentic workflows — across two leading platforms, with a focus on real capital markets use cases. Each session builds on the last, culminating in Agentic Den labs where participants design and deploy AI agents for their day-to-day work.</p>
+    <span class="placeholder-note">&#9998; Content will be updated once the full one-pager is provided by Snarmi.</span>
+  </div>
+  <div class="goals-grid">
+    <div class="goal-card reveal" onclick="pulseGoal(this)">
+      <div class="goal-number">01</div>
+      <div class="goal-icon" style="background:linear-gradient(135deg,#c4b5fd,#a78bfa)"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <h3>Build AI Fluency</h3>
+      <p>Give every capital markets professional hands-on familiarity with the AI tools reshaping the industry.</p>
+    </div>
+    <div class="goal-card reveal" style="transition-delay:0.1s" onclick="pulseGoal(this)">
+      <div class="goal-number">02</div>
+      <div class="goal-icon" style="background:linear-gradient(135deg,#a78bfa,#8b5cf6)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <h3>Real Workflows, Real Impact</h3>
+      <p>Every session is anchored to capital markets use cases — research, analysis, client delivery, and beyond.</p>
+    </div>
+    <div class="goal-card reveal" style="transition-delay:0.2s" onclick="pulseGoal(this)">
+      <div class="goal-number">03</div>
+      <div class="goal-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
+      <h3>Deploy AI Agents</h3>
+      <p>Each programme culminates in an Agentic Den — where you build and deploy a real AI agent for your work.</p>
+    </div>
+    <div class="goal-card reveal" style="transition-delay:0.3s" onclick="pulseGoal(this)">
+      <div class="goal-number">04</div>
+      <div class="goal-icon" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <h3>Two Platforms, One Journey</h3>
+      <p>Master Microsoft Copilot and Anthropic Claude — the two most relevant AI platforms in enterprise today.</p>
+    </div>
+    <div class="goal-card reveal" style="transition-delay:0.4s" onclick="pulseGoal(this)">
+      <div class="goal-number">05</div>
+      <div class="goal-icon" style="background:linear-gradient(135deg,#6d28d9,#5b21b6)"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <h3>Practice-Wide Visibility</h3>
+      <p>A shared agent tracker gives leadership real-time visibility of every agent built across the programme.</p>
+    </div>
+    <div class="goal-card reveal" style="transition-delay:0.5s" onclick="pulseGoal(this)">
+      <div class="goal-number">06</div>
+      <div class="goal-icon" style="background:linear-gradient(135deg,#5b21b6,#3b0764)"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>One Session Mandatory</h3>
+      <p>Sessions run at lunchtime and after-work so there's a slot for everyone. We ask that at least one is made mandatory for the team.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gap-section" id="gap">
+  <div class="gap-inner">
+    <div class="gap-text reveal-left">
+      <h2>Where Are We Today?</h2>
+      <p>Most people in capital markets are aware of AI — but very few are actually using it in their day-to-day work. This programme is designed to move everyone along the journey, from knowing what AI is to genuinely embedding it into how we work.</p>
+      <div class="skill-levels">
+        <div class="skill-level l1"><h4>Group 1 &bull; Aware</h4><p>Knows the terminology. Has never built an agent.</p></div>
+        <div class="skill-level l2"><h4>Group 2 &bull; Capable</h4><p>Has built one — but isn't using agents day to day.</p></div>
+        <div class="skill-level l3"><h4>Group 3 &bull; Embedded</h4><p>Regularly builds, ideates, and shares with the team.</p></div>
+        <div class="skill-goal-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a5bd9" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          Goal: everyone reaches Group 3
+        </div>
+      </div>
+    </div>
+    <div class="gap-workshops reveal-right">
+      <h3>How Each Workshop Runs</h3>
+      <div class="workshop-step">
+        <div class="ws-num c1">1</div>
+        <div class="ws-body">
+          <h4>Learn &amp; Explore</h4>
+          <p>We frame a real problem together and think through where AI could help. No technical knowledge needed — just curiosity.</p>
+        </div>
+      </div>
+      <div class="workshop-step">
+        <div class="ws-num c2">2</div>
+        <div class="ws-body">
+          <h4>Build Something</h4>
+          <p>The hands-on part. You actually build an AI agent — either from the session or something from your own work. Support is available throughout.</p>
+        </div>
+      </div>
+      <div class="workshop-step">
+        <div class="ws-num c3">3</div>
+        <div class="ws-body">
+          <h4>Share &amp; Log It</h4>
+          <p>Everyone shows what they built. We share feedback, celebrate wins, and log it to the practice-wide Agent Tracker.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="timeline-section" id="timeline">
+  <h2 class="reveal">Programme Timeline</h2>
+  <p class="tl-sub reveal">From the first Copilot workshop through to the final Agent Den.</p>
+  <div class="timeline-wrap reveal">
+    <div class="tl-cards">
+
+      <div class="tl-card">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#c4b5fd,#a78bfa)">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="tl-card-tag co">Copilot</div>
+        <div class="tl-card-date">6 May</div>
+        <div class="tl-card-name">Workshop 1</div>
+      </div>
+
+      <div class="tl-card">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#a78bfa,#8b5cf6)">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="tl-card-tag co">Copilot</div>
+        <div class="tl-card-date">13 May</div>
+        <div class="tl-card-name">Workshop 2</div>
+      </div>
+
+      <div class="tl-card is-den">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+        </div>
+        <div class="tl-card-tag den">Co. Den</div>
+        <div class="tl-card-date">20 May</div>
+        <div class="tl-card-name">Build &amp; Deploy</div>
+      </div>
+
+      <div class="tl-card">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="tl-card-tag cl">Claude</div>
+        <div class="tl-card-date">27 May</div>
+        <div class="tl-card-name">Workshop 1</div>
+      </div>
+
+      <div class="tl-card">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#7c3aed,#6d28d9)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="tl-card-tag cl">Claude</div>
+        <div class="tl-card-date">3 June</div>
+        <div class="tl-card-name">Workshop 2</div>
+      </div>
+
+      <div class="tl-card">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#6d28d9,#5b21b6)">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="tl-card-tag cl">Claude</div>
+        <div class="tl-card-date">10 June</div>
+        <div class="tl-card-name">Workshop 3</div>
+      </div>
+
+      <div class="tl-card is-final">
+        <div class="tl-node-circle" style="background:linear-gradient(135deg,#5b21b6,#3b0764)">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="tl-card-tag den">Final Den</div>
+        <div class="tl-card-date">24 June</div>
+        <div class="tl-card-name">Final Showcase</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="sessions-section" id="sessions">
+  <div class="section-eyebrow">Programme Structure</div>
+  <h2 class="section-title reveal">Your Sessions</h2>
+  <p class="section-sub reveal">Sessions unlock as each one gets close to its hosting date. Only the first session is open now — content for it will be added shortly.</p>
+
+  <div class="sessions-block reveal">
+    <div class="tool-header">
+      <div class="tool-icon copilot">Co.</div>
+      <div><div class="tool-title">Microsoft Copilot</div><div class="tool-subtitle">2 Sessions + Agentic Den</div></div>
+    </div>
+    <div class="cards-row cols-3" style="max-width:860px">
+      <svg class="arrows-svg" viewBox="0 0 860 60" preserveAspectRatio="none">
+        <path d="M 240 28 Q 360 4 430 28" fill="none" stroke="#3a5bd9" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <polygon points="430,28 422,22 422,34" fill="#3a5bd9"/>
+        <path d="M 430 28 Q 500 4 620 28" fill="none" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <polygon points="620,28 612,22 612,34" fill="#c4b5fd"/>
+      </svg>
+      <div class="session-card-new open" onclick="window.location.href='session-1-copilot.html'">
+        <div class="lock-badge open-b"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg> Open</div>
+        <div class="card-icon-wrap" style="background:linear-gradient(135deg,#0078d4,#00b4f0)">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Session 1</h3>
+        <p>Content and materials coming very soon — check back shortly.</p>
+      </div>
+      <div class="session-card-new locked">
+        <div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div>
+        <div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Session 2</h3>
+        <p>Unlocks ahead of 13 May.</p>
+      </div>
+      <div class="session-card-new locked agentic">
+        <div class="lock-badge agentic-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div>
+        <div class="card-icon-wrap" style="background:#ede8ff"><svg viewBox="0 0 24 24" style="stroke:#6c47d4"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
+        <h3>Agentic Den</h3>
+        <p>Unlocks ahead of 20 May.</p>
+      </div>
+    </div>
+    <p class="unlock-note">&#128274; Sessions unlock as each one approaches — you'll be notified in advance.</p>
+  </div>
+
+  <div class="sessions-block reveal">
+    <div class="tool-header">
+      <div class="tool-icon claude">Cl.</div>
+      <div><div class="tool-title">Anthropic Claude</div><div class="tool-subtitle">4 Sessions + Agentic Den</div></div>
+    </div>
+    <div class="cards-row cols-5">
+      <svg class="arrows-svg" viewBox="0 0 1100 60" preserveAspectRatio="none">
+        <path d="M 175 28 Q 262 4 330 28" fill="none" stroke="#d97b4f" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <polygon points="330,28 322,22 322,34" fill="#d97b4f"/>
+        <path d="M 330 28 Q 440 4 550 28" fill="none" stroke="#d97b4f" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <polygon points="550,28 542,22 542,34" fill="#d97b4f"/>
+        <path d="M 550 28 Q 660 4 770 28" fill="none" stroke="#d97b4f" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <polygon points="770,28 762,22 762,34" fill="#d97b4f"/>
+        <path d="M 770 28 Q 880 4 950 28" fill="none" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <polygon points="950,28 942,22 942,34" fill="#c4b5fd"/>
+      </svg>
+      <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>Session 1</h3><p>Unlocks ahead of 27 May.</p></div>
+      <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Session 2</h3><p>Unlocks ahead of 3 June.</p></div>
+      <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>Session 3</h3><p>Unlocks ahead of 10 June.</p></div>
+      <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Session 4</h3><p>Date to be confirmed.</p></div>
+      <div class="session-card-new locked agentic"><div class="lock-badge agentic-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#ede8ff"><svg viewBox="0 0 24 24" style="stroke:#6c47d4"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div><h3>Agentic Den</h3><p>Unlocks ahead of 24 June — the final showcase.</p></div>
+    </div>
+    <p class="unlock-note">&#128274; Sessions unlock as each one approaches — you'll be notified in advance.</p>
+  </div>
+</section>
+
+<section class="roi-section" id="roi">
+  <div class="roi-inner">
+    <div class="section-eyebrow" style="text-align:left;margin-bottom:8px">What you get out of it</div>
+    <h2 class="reveal">Projected Outcomes</h2>
+    <p class="reveal">Every attendee leaves with something tangible. Here's what the programme is designed to deliver — for individuals and for the practice.</p>
+    <div class="roi-grid">
+      <div class="roi-card reveal"><h3>&#129302; Agents Built</h3><p>Every attendee leaves with a working AI agent they built themselves — not a demo, not a slide. A real agent for a real use case.</p></div>
+      <div class="roi-card reveal" style="transition-delay:0.1s"><h3>&#128161; Idea Pipeline</h3><p>A live log of use cases for internal and client use — captured and tracked across every session in the agent tracker.</p></div>
+      <div class="roi-card reveal" style="transition-delay:0.2s"><h3>&#128200; Skill Uplift</h3><p>Measurable progress — we know who can build, what they've built, and where to focus next. Group 3 is the target for everyone.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="tracker-section" id="tracker">
+  <div class="tracker-inner">
+    <div class="section-eyebrow" style="text-align:left;margin-bottom:8px">Practice-Wide Visibility</div>
+    <h2 class="reveal">Agent Tracker</h2>
+    <p class="reveal">A shared Excel tracker gives the entire practice visibility of every AI agent built across the programme. Track agent type, use case, owner, and deployment status — all in one place.</p>
+    <div class="tracker-card reveal">
+      <div class="tracker-card-left">
+        <div class="tracker-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></div>
+        <div class="tracker-text"><h3>Capital Markets Agent Tracker</h3><p>Excel workbook &bull; All agents across the practice &bull; Updated after each Agentic Den</p></div>
+      </div>
+      <button class="tracker-btn" onclick="trackerClick()">Open Tracker &#8599;</button>
+    </div>
+    <div class="tracker-placeholder-note">&#9998; Replace with the shared Excel file link once available.</div>
+  </div>
+</section>
+
+<section class="beyond-section" id="beyond">
+  <div class="section-eyebrow">What comes next</div>
+  <h2 class="section-title reveal">And Beyond...</h2>
+  <p class="section-sub reveal">The Agenda is just the beginning. Here's where the programme is heading once all six sessions are complete.</p>
+  <div class="beyond-grid">
+    <div class="beyond-card reveal"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Advanced Agentic Workflows</h3><p>Multi-agent pipelines, orchestration, and AI systems that run autonomously across capital markets processes. Placeholder — to be confirmed.</p></div>
+    <div class="beyond-card reveal" style="transition-delay:0.1s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>Continuous Learning Pathway</h3><p>New sessions added as Copilot and Claude release capabilities relevant to capital markets. The programme evolves with the tools. Placeholder — to be confirmed.</p></div>
+    <div class="beyond-card reveal" style="transition-delay:0.2s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Community &amp; Peer Network</h3><p>Connect with other capital markets AI practitioners. Share agents, prompts, and lessons learned across the practice. Placeholder — to be confirmed.</p></div>
+  </div>
+  <div class="beyond-cta reveal"><p>&#9998; This section will be expanded once final programme direction is confirmed by Snarmi.</p></div>
+</section>
+
+<section class="brought-section" id="brought">
+  <div class="brought-inner">
+    <div class="section-eyebrow">In partnership</div>
+    <h2 class="reveal">Brought to You By...</h2>
+    <p class="reveal">The Capital Markets AI Agenda is delivered in collaboration with leading organisations committed to AI enablement in financial services.</p>
+    <div class="partners-row reveal">
+      <div class="partner-placeholder"><div class="partner-logo-box"><span>Partner Logo</span></div><div class="partner-name">Organisation Name</div></div>
+      <div class="partner-divider"></div>
+      <div class="partner-placeholder"><div class="partner-logo-box"><span>Partner Logo</span></div><div class="partner-name">Organisation Name</div></div>
+      <div class="partner-divider"></div>
+      <div class="partner-placeholder"><div class="partner-logo-box"><span>Partner Logo</span></div><div class="partner-name">Organisation Name</div></div>
+    </div>
+    <div class="brought-note reveal">&#9998; Add partner names, logos, and links once confirmed.</div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand reveal-left">
+      <span class="footer-logo">Capital Markets <span>Agenda</span></span>
+      <p>A structured AI enablement programme for capital markets professionals, led by Ian K. in partnership with Snarmi.</p>
+      <p class="copy">&#169; 2026 Capital Markets AI Agenda. All rights reserved.</p>
+    </div>
+    <div class="reveal" style="transition-delay:0.1s">
+      <h4>Programme</h4>
+      <ul><li><a href="#sessions">Copilot Sessions</a></li><li><a href="#sessions">Claude Sessions</a></li><li><a href="#sessions">Agentic Den</a></li><li><a href="#tracker">Agent Tracker</a></li></ul>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s">
+      <h4>Resources</h4>
+      <ul><li><a href="#">Programme Guide</a></li><li><a href="#">One-Pager</a></li><li><a href="#">FAQs</a></li><li><a href="#">Contact Ian</a></li></ul>
+    </div>
+    <div class="reveal" style="transition-delay:0.3s">
+      <h4>Connect</h4>
+      <div class="social-icons"><div class="soc li">in</div><div class="soc ms">M</div><div class="soc em">@</div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">&#169; 2026 Capital Markets AI Agenda &bull; Placeholder content — final copy to be supplied by Snarmi.</div>
+</footer>
+
+<div class="toast" id="toast"><span class="toast-accent" id="toastMsg"></span></div>
+
+<script>
+  const tickerItems = [
+    {label:'Copilot Workshop 1', val:'6 May', tag:'Open Now'},
+    {label:'Copilot Workshop 2', val:'13 May', tag:'Coming Soon'},
+    {label:'Copilot Den', val:'20 May', tag:'Build & Deploy'},
+    {label:'Claude Workshop 1', val:'27 May', tag:'Coming Soon'},
+    {label:'Claude Workshop 2', val:'3 June', tag:'Coming Soon'},
+    {label:'Claude Workshop 3', val:'10 June', tag:'Coming Soon'},
+    {label:'Final Agent Den', val:'24 June', tag:'Showcase'},
+    {label:'Programme Lead', val:'Ian K.', tag:'Capital Markets AI'},
+  ];
+  const track = document.getElementById('tickerTrack');
+  [...tickerItems,...tickerItems].forEach(t => {
+    track.innerHTML += `<div class="ticker-item"><span class="t-label">${t.label}</span><span class="t-val">${t.val}</span><span class="t-tag">${t.tag}</span></div>`;
+  });
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => io.observe(el));
+
+  const cio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const start = performance.now();
+      (function step(now) {
+        const p = Math.min((now - start) / 1400, 1);
+        const ease = 1 - Math.pow(1 - p, 3);
+        el.innerHTML = `${prefix}${Math.round(ease * target)}<span>${suffix}</span>`;
+        if (p < 1) requestAnimationFrame(step);
+      })(start);
+      cio.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter-num').forEach(el => cio.observe(el));
+
+  const grad = document.getElementById('heroGradient');
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const s = 4 + Math.random() * 12;
+    p.style.cssText = `width:${s}px;height:${s}px;left:${20+Math.random()*80}%;bottom:${Math.random()*40}px;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*6}s`;
+    grad.appendChild(p);
+  }
+
+  function showToast(msg) {
+    document.getElementById('toastMsg').textContent = msg;
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+  function openSession(name) { showToast('▶  Opening: ' + name); }
+  function trackerClick() { showToast('📊  Tracker link not yet configured — placeholder'); }
+  function pulseGoal(el) {
+    document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+</script>
+</body>
+</html>
