@@ -254,7 +254,7 @@
     .reveal-left.visible { opacity: 1; transform: translateX(0); }
     .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal-right.visible { opacity: 1; transform: translateX(0); }
-    .toast { position: fixed; bottom: 100px; right: 32px; z-index: 998; background: #1a1f3c; color: #fff; padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.18); transform: translateY(80px); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
+    .toast { position: fixed; bottom: 32px; right: 32px; z-index: 998; background: #1a1f3c; color: #fff; padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.18); transform: translateY(80px); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast-accent { color: #a78bfa; font-weight: 700; }
 
@@ -274,43 +274,6 @@
     .nudge-btn svg { width: 12px; height: 12px; stroke: #fff; fill: none; stroke-width: 2.5; }
     .nudge-dismiss { font-size: 0.7rem; color: #bbb; cursor: pointer; background: none; border: none; font-family: inherit; transition: color 0.2s; }
     .nudge-dismiss:hover { color: #888; }
-    .chat-bubble { position: fixed; bottom: 32px; right: 32px; z-index: 1000; }
-    .chat-toggle { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #1a1f3c, #6c47d4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(108,71,212,0.45); transition: transform 0.2s, box-shadow 0.2s; }
-    .chat-toggle:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(108,71,212,0.55); }
-    .chat-toggle svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; }
-    .chat-toggle .icon-close { display: none; }
-    .chat-bubble.open .icon-chat { display: none; }
-    .chat-bubble.open .icon-close { display: block; }
-    .chat-window { position: absolute; bottom: 70px; right: 0; width: 380px; height: 520px; background: #fff; border-radius: 20px; box-shadow: 0 24px 64px rgba(0,0,0,0.18); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ede9fe; animation: chatIn 0.25s ease; }
-    @keyframes chatIn { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
-    .chat-bubble.open .chat-window { display: flex; }
-    .chat-header { background: linear-gradient(135deg, #1a1f3c, #3b1f6e); padding: 16px 18px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-    .chat-header-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(167,139,250,0.2); border: 1px solid rgba(167,139,250,0.3); display: flex; align-items: center; justify-content: center; }
-    .chat-header-icon svg { width: 18px; height: 18px; stroke: #c4b5fd; fill: none; stroke-width: 2; }
-    .chat-header-text h4 { font-size: 0.88rem; font-weight: 700; color: #fff; }
-    .chat-header-text p { font-size: 0.7rem; color: rgba(196,181,253,0.7); margin-top: 1px; }
-    .chat-dot { width: 7px; height: 7px; border-radius: 50%; background: #a78bfa; animation: pulse 2s infinite; margin-left: auto; }
-    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-    .chat-messages::-webkit-scrollbar { width: 4px; }
-    .chat-messages::-webkit-scrollbar-thumb { background: #ede9fe; border-radius: 2px; }
-    .msg { max-width: 88%; padding: 10px 13px; border-radius: 14px; font-size: 0.82rem; line-height: 1.55; }
-    .msg.bot { background: #f5f0ff; color: #1a1f3c; border-bottom-left-radius: 4px; align-self: flex-start; }
-    .msg.user { background: linear-gradient(135deg, #3b1f6e, #6c47d4); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
-    .msg.typing { background: #f5f0ff; align-self: flex-start; padding: 12px 16px; }
-    .typing-dots { display: flex; gap: 4px; }
-    .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: #a78bfa; animation: tdot 1.2s infinite; }
-    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes tdot { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
-    .chat-suggestions { padding: 8px 16px; display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; border-top: 1px solid #f5f0ff; }
-    .chat-sugg { background: #f5f0ff; border: 1px solid #ddd6fe; color: #6c47d4; font-size: 0.72rem; font-weight: 600; padding: 5px 10px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
-    .chat-sugg:hover { background: #ede9fe; }
-    .chat-input-row { padding: 12px 14px; display: flex; gap: 8px; border-top: 1px solid #f0f0f0; flex-shrink: 0; }
-    .chat-input { flex: 1; border: 1.5px solid #e8eeff; border-radius: 25px; padding: 9px 16px; font-size: 0.82rem; outline: none; font-family: inherit; transition: border-color 0.2s; }
-    .chat-input:focus { border-color: #a78bfa; }
-    .chat-send { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3b1f6e, #6c47d4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.2s; }
-    .chat-send:hover { opacity: 0.88; }
-    .chat-send svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; }
   </style>
 </head>
 <body>
@@ -463,8 +426,8 @@
 <section class="what-section" id="about">
   <div class="what-intro reveal">
     <h2>What is the Capital Markets Agenda?</h2>
-    <p class="highlight">A practitioner-first AI learning journey built specifically for capital markets professionals.</p>
-    <p>The Capital Markets Agenda takes individuals and teams from foundational AI awareness through to hands-on agentic workflows — across two leading platforms, with a focus on real capital markets use cases. Each session builds on the last, culminating in Agentic Den labs where participants design and deploy AI agents for their day-to-day work.</p>
+    <p class="highlight">A practitioner-first AI learning journey built specifically for Capital Markets professionals.</p>
+    <p>The Capital Markets Agenda takes individuals and teams from foundational AI awareness through to hands-on agentic workflows — across two leading platforms, with a focus on real Capital Markets use cases. Each session builds on the last, culminating in Agent Den labs where participants design and deploy AI agents for their day-to-day work.</p>
     
   </div>
   <div class="goals-grid">
@@ -478,13 +441,13 @@
       <div class="goal-number">02</div>
       <div class="goal-icon" style="background:linear-gradient(135deg,#a78bfa,#8b5cf6)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
       <h3>Real Workflows, Real Impact</h3>
-      <p>Every session is anchored to capital markets use cases — research, analysis, client delivery, and beyond.</p>
+      <p>Every session is anchored to Capital Markets use cases — research, analysis, client delivery, and beyond.</p>
     </div>
     <div class="goal-card reveal" style="transition-delay:0.2s" onclick="pulseGoal(this)">
       <div class="goal-number">03</div>
       <div class="goal-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
       <h3>Deploy AI Agents</h3>
-      <p>Each programme culminates in an Agentic Den — where you build and deploy a real AI agent for your work.</p>
+      <p>Each programme culminates in an Agent Den — where you build and deploy a real AI agent for your work.</p>
     </div>
     <div class="goal-card reveal" style="transition-delay:0.3s" onclick="pulseGoal(this)">
       <div class="goal-number">04</div>
@@ -577,7 +540,7 @@
         <div class="tl-node-circle" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
         </div>
-        <div class="tl-card-tag den">Co. Den</div>
+        <div class="tl-card-tag den">Copilot Agent Den</div>
         <div class="tl-card-date">20 May</div>
         <div class="tl-card-name">Build &amp; Deploy</div>
       </div>
@@ -613,7 +576,7 @@
         <div class="tl-node-circle" style="background:linear-gradient(135deg,#5b21b6,#3b0764)">
           <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <div class="tl-card-tag den">Final Den</div>
+        <div class="tl-card-tag den">Ultimate Claude Agent Den</div>
         <div class="tl-card-date">24 June</div>
         <div class="tl-card-name">Final Showcase</div>
       </div>
@@ -630,7 +593,7 @@
   <div class="sessions-block reveal">
     <div class="tool-header">
       <div class="tool-icon copilot">Co.</div>
-      <div><div class="tool-title">Microsoft Copilot</div><div class="tool-subtitle">2 Sessions + Agentic Den</div></div>
+      <div><div class="tool-title">Microsoft Copilot</div><div class="tool-subtitle">2 Sessions + Agent Den</div></div>
     </div>
     <div class="cards-row cols-3" style="max-width:860px">
       <svg class="arrows-svg" viewBox="0 0 860 60" preserveAspectRatio="none">
@@ -656,7 +619,7 @@
       <div class="session-card-new locked agentic">
         <div class="lock-badge agentic-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div>
         <div class="card-icon-wrap" style="background:#ede8ff"><svg viewBox="0 0 24 24" style="stroke:#6c47d4"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div>
-        <h3>Agentic Den</h3>
+        <h3>Agent Den</h3>
         <p>Unlocks ahead of 20 May.</p>
       </div>
     </div>
@@ -666,7 +629,7 @@
   <div class="sessions-block reveal">
     <div class="tool-header">
       <div class="tool-icon claude">Cl.</div>
-      <div><div class="tool-title">Anthropic Claude</div><div class="tool-subtitle">4 Sessions + Agentic Den</div></div>
+      <div><div class="tool-title">Anthropic Claude</div><div class="tool-subtitle">4 Sessions + Agent Den</div></div>
     </div>
     <div class="cards-row cols-5">
       <svg class="arrows-svg" viewBox="0 0 1100 60" preserveAspectRatio="none">
@@ -683,7 +646,7 @@
       <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Session 2</h3><p>Unlocks ahead of 3 June.</p></div>
       <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>Session 3</h3><p>Unlocks ahead of 10 June.</p></div>
       <div class="session-card-new locked"><div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#e8eeff"><svg viewBox="0 0 24 24" style="stroke:#c0caf5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Session 4</h3><p>Date to be confirmed.</p></div>
-      <div class="session-card-new locked agentic"><div class="lock-badge agentic-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#ede8ff"><svg viewBox="0 0 24 24" style="stroke:#6c47d4"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div><h3>Agentic Den</h3><p>Unlocks ahead of 24 June — the final showcase.</p></div>
+      <div class="session-card-new locked agentic"><div class="lock-badge agentic-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div><div class="card-icon-wrap" style="background:#ede8ff"><svg viewBox="0 0 24 24" style="stroke:#6c47d4"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg></div><h3>Agent Den</h3><p>Unlocks ahead of 24 June — the final showcase.</p></div>
     </div>
     <p class="unlock-note">&#128274; Sessions unlock as each one approaches — you'll be notified in advance.</p>
   </div>
@@ -710,7 +673,7 @@
     <div class="tracker-card reveal">
       <div class="tracker-card-left">
         <div class="tracker-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></div>
-        <div class="tracker-text"><h3>Capital Markets Agent Tracker</h3><p>Excel workbook &bull; All agents across the practice &bull; Updated after each Agentic Den</p></div>
+        <div class="tracker-text"><h3>Capital Markets Agent Tracker</h3><p>Excel workbook &bull; All agents across the practice &bull; Updated after each Agent Den</p></div>
       </div>
       <button class="tracker-btn" onclick="trackerClick()">Open Tracker &#8599;</button>
     </div>
@@ -723,9 +686,9 @@
   <h2 class="section-title reveal">And Beyond...</h2>
   <p class="section-sub reveal">The Agenda is just the beginning. Here's where the programme is heading once all six sessions are complete.</p>
   <div class="beyond-grid">
-    <div class="beyond-card reveal"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Advanced Agentic Workflows</h3><p>Multi-agent pipelines, orchestration, and AI systems that run autonomously across capital markets processes.</p></div>
+    <div class="beyond-card reveal"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Advanced Agentic Workflows</h3><p>Multi-agent pipelines, orchestration, and AI systems that run autonomously across Capital Markets processes.</p></div>
     <div class="beyond-card reveal" style="transition-delay:0.1s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>Continuous Learning Pathway</h3><p>New sessions added as Copilot and Claude release capabilities relevant to capital markets. The programme evolves with the tools.</p></div>
-    <div class="beyond-card reveal" style="transition-delay:0.2s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Community &amp; Peer Network</h3><p>Connect with other capital markets AI practitioners. Share agents, prompts, and lessons learned across the practice.</p></div>
+    <div class="beyond-card reveal" style="transition-delay:0.2s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Community &amp; Peer Network</h3><p>Connect with other Capital Markets AI practitioners. Share agents, prompts, and lessons learned across the practice.</p></div>
   </div>
   
 </section>
@@ -748,17 +711,6 @@
         </a>
       </div>
 
-      <div class="presenter-card">
-        <div class="presenter-tag">Session Designed &amp; Delivered By</div>
-        <div class="presenter-name">Saanvi Raghuwanshi</div>
-        <div class="presenter-role">Management Consulting Analyst &middot; CM.AI</div>
-        <p class="presenter-bio">Have ideas or need support after today? Reach out on EID: <strong>saanvi.raghuwanshi</strong></p>
-        <a href="#" class="presenter-linkedin">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-          Connect on LinkedIn
-        </a>
-      </div>
-
     </div>
   </div>
 </section>
@@ -767,12 +719,12 @@
   <div class="footer-grid">
     <div class="footer-brand reveal-left">
       <span class="footer-logo">Capital Markets <span>Agenda</span></span>
-      <p>A structured AI enablement programme for capital markets professionals, led by Ian Howie in partnership with CM.AI.</p>
+      <p>A structured AI enablement programme for Capital Markets professionals, led by Ian Howie and delivered by CM.AI.</p>
       <p class="copy">&#169; 2026 Capital Markets AI Agenda. All rights reserved.</p>
     </div>
     <div class="reveal" style="transition-delay:0.1s">
       <h4>Programme</h4>
-      <ul><li><a href="#sessions">Copilot Sessions</a></li><li><a href="#sessions">Claude Sessions</a></li><li><a href="#sessions">Agentic Den</a></li><li><a href="#tracker">Agent Tracker</a></li></ul>
+      <ul><li><a href="#sessions">Copilot Sessions</a></li><li><a href="#sessions">Claude Sessions</a></li><li><a href="#sessions">Agent Den</a></li><li><a href="#tracker">Agent Tracker</a></li></ul>
     </div>
     <div class="reveal" style="transition-delay:0.2s">
       <h4>Resources</h4>
@@ -780,42 +732,14 @@
     </div>
     <div class="reveal" style="transition-delay:0.3s">
       <h4>Connect</h4>
-      <div class="social-icons"><div class="soc li">in</div><div class="soc ms">M</div><div class="soc em">@</div></div>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/rosa-bhanley-1a7488232/" target="_blank" class="soc li" style="text-decoration:none">in</a>
+      </div>
+      <a href="mailto:rosalia.bhanley@accenture.com" style="display:inline-block;margin-top:12px;font-size:0.78rem;color:#6c47d4;font-weight:600;text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1">rosalia.bhanley@accenture.com</a>
     </div>
   </div>
   <div class="footer-bottom">&#169; 2026 Capital Markets AI Agenda</div>
 </footer>
-
-<!-- CHATBOT -->
-<div class="chat-bubble" id="chatBubble">
-  <div class="chat-window">
-    <div class="chat-header">
-      <div class="chat-header-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-      <div class="chat-header-text">
-        <h4>Agenda Assistant</h4>
-        <p>Ask me anything about the programme</p>
-      </div>
-      <div class="chat-dot"></div>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-      <div class="msg bot">👋 Hi! I'm the Capital Markets Agenda assistant. Ask me anything about the sessions, how to build an agent, what Copilot vs Claude does, or anything else about the programme.</div>
-    </div>
-    <div class="chat-suggestions">
-      <button class="chat-sugg" onclick="sendSugg(this)">What sessions are available?</button>
-      <button class="chat-sugg" onclick="sendSugg(this)">Copilot vs Claude?</button>
-      <button class="chat-sugg" onclick="sendSugg(this)">What is an Agentic Den?</button>
-      <button class="chat-sugg" onclick="sendSugg(this)">How do I build an agent?</button>
-    </div>
-    <div class="chat-input-row">
-      <input class="chat-input" id="chatInput" type="text" placeholder="Ask a question..." onkeydown="if(event.key==='Enter') sendChat()">
-      <button class="chat-send" onclick="sendChat()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
-    </div>
-  </div>
-  <button class="chat-toggle" onclick="document.getElementById('chatBubble').classList.toggle('open')">
-    <svg class="icon-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-    <svg class="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-  </button>
-</div>
 
 <!-- SESSION NUDGE -->
 <div class="session-nudge" id="sessionNudge">
@@ -837,11 +761,11 @@
   const tickerItems = [
     {label:'Copilot Workshop 1', val:'6 May', tag:'Open Now'},
     {label:'Copilot Workshop 2', val:'13 May', tag:'Coming Soon'},
-    {label:'Copilot Den', val:'20 May', tag:'Build & Deploy'},
+    {label:'Copilot Agent Den', val:'20 May', tag:'Build & Deploy'},
     {label:'Claude Workshop 1', val:'27 May', tag:'Coming Soon'},
     {label:'Claude Workshop 2', val:'3 June', tag:'Coming Soon'},
     {label:'Claude Workshop 3', val:'10 June', tag:'Coming Soon'},
-    {label:'Final Agent Den', val:'24 June', tag:'Showcase'},
+    {label:'Ultimate Claude Agent Den', val:'24 June', tag:'Showcase'},
     {label:'Programme Lead', val:'Ian Howie', tag:'Capital Markets AI'},
   ];
   const track = document.getElementById('tickerTrack');
@@ -913,82 +837,6 @@
     dotsContainer.children[current].classList.add('active');
   }
   setInterval(() => goTo((current + 1) % slides.length), 5000);
-
-  // ── Chatbot ──
-  const SYSTEM_PROMPT = `You are a friendly assistant for the Capital Markets AI Agenda — a structured AI enablement programme run by CM.AI at Accenture for capital markets professionals.
-
-The programme covers:
-- Microsoft Copilot: 2 workshops (6 May, 13 May) + Mini Agentic Den (20 May)
-- Anthropic Claude: 3 workshops (27 May, 3 June, 10 June) + Final Agentic Den (24 June)
-- Sessions unlock as each date approaches
-- Each session has a dedicated page with step-by-step build guides, copyable prompts, and a test checklist
-- A live Agent Tracker (Excel) logs all agents built across the practice
-- Programme Director: Ian Howie (Capital Markets AI Lead)
-- Delivered by: Rosalia Bhanley and Saanvi Raghuwanshi (CM.AI, Accenture)
-
-Answer questions about sessions, dates, how to build agents, what Copilot vs Claude is good for, the Agentic Den format, prizes (Gilet for 1st, recognition points for 2nd/3rd), and the website features. Keep answers concise and friendly. If asked something outside the programme, politely redirect.`;
-
-  const chatHistory = [];
-
-  async function sendChat() {
-    const input = document.getElementById('chatInput');
-    const msg = input.value.trim();
-    if (!msg) return;
-    input.value = '';
-    addMsg(msg, 'user');
-    chatHistory.push({ role: 'user', content: msg });
-    const typingId = addTyping();
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 400,
-          system: SYSTEM_PROMPT,
-          messages: chatHistory
-        })
-      });
-      const data = await res.json();
-      const reply = data.content?.[0]?.text || 'Sorry, I couldn\'t get a response right now.';
-      chatHistory.push({ role: 'assistant', content: reply });
-      removeTyping(typingId);
-      addMsg(reply, 'bot');
-    } catch {
-      removeTyping(typingId);
-      addMsg('Sorry, something went wrong. Please try again.', 'bot');
-    }
-  }
-
-  function sendSugg(el) {
-    document.getElementById('chatInput').value = el.textContent;
-    sendChat();
-  }
-
-  function addMsg(text, role) {
-    const el = document.createElement('div');
-    el.className = `msg ${role}`;
-    el.textContent = text;
-    const msgs = document.getElementById('chatMessages');
-    msgs.appendChild(el);
-    msgs.scrollTop = msgs.scrollHeight;
-    return el;
-  }
-
-  function addTyping() {
-    const id = Date.now();
-    const el = document.createElement('div');
-    el.className = 'msg typing'; el.dataset.id = id;
-    el.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-    const msgs = document.getElementById('chatMessages');
-    msgs.appendChild(el);
-    msgs.scrollTop = msgs.scrollHeight;
-    return id;
-  }
-
-  function removeTyping(id) {
-    document.querySelector(`[data-id="${id}"]`)?.remove();
-  }
 
   function showToast(msg) {
     document.getElementById('toastMsg').textContent = msg;
