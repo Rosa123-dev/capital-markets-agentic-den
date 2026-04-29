@@ -30,32 +30,56 @@
     .nav-links a:hover::after { width: 100%; }
     .nav-cta { background: linear-gradient(135deg, #1a1f3c, #6c47d4); color: #fff; border: none; padding: 9px 22px; border-radius: 25px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
     .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
-    .hero { position: relative; min-height: 540px; background: #eef2fa; overflow: hidden; display: flex; align-items: center; }
+    .hero { position: relative; min-height: 520px; background: #eef2fa; overflow: hidden; display: flex; align-items: stretch; }
     .hero-gradient { position: absolute; top: 0; right: 0; bottom: 0; width: 68%; background: linear-gradient(135deg, #1a1f3c 0%, #3b1f6e 45%, #6c47d4 100%); clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%); }
+    /* grid overlay on gradient */
+    .hero-gradient::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
     .particle { position: absolute; border-radius: 50%; opacity: 0.15; background: #fff; animation: floatUp linear infinite; }
     @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0.15; } 50% { opacity: 0.28; } 100% { transform: translateY(-560px) rotate(360deg); opacity: 0; } }
-    .hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; width: 100%; align-items: center; }
-    .hero-left { padding: 60px 20px 60px 80px; }
-    .hero-eyebrow { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: #a78bfa; margin-bottom: 12px; opacity: 0; animation: fadeUp 0.6s 0.1s forwards; }
-    .hero-left h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.15; color: #1a1f3c; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; }
+    .hero-content { position: relative; z-index: 2; display: grid; grid-template-columns: 5fr 6fr; width: 100%; align-items: center; }
+    .hero-left { padding: 64px 24px 64px 80px; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: #a78bfa; margin-bottom: 14px; opacity: 0; animation: fadeUp 0.6s 0.1s forwards; display: flex; align-items: center; gap: 8px; }
+    .hero-eyebrow::before { content: ''; width: 24px; height: 2px; background: #a78bfa; border-radius: 2px; }
+    .hero-left h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.12; color: #1a1f3c; margin-bottom: 18px; opacity: 0; animation: fadeUp 0.7s 0.2s forwards; max-width: 400px; }
     .hero-left h1 span { color: #7c3aed; }
-    .hero-left > p { font-size: 0.92rem; color: #666; line-height: 1.75; margin-bottom: 28px; max-width: 440px; opacity: 0; animation: fadeUp 0.7s 0.4s forwards; }
-    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s 0.55s forwards; }
-    .badge { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #e0e6ff; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; color: #3a5bd9; }
+    .hero-left > p { font-size: 0.9rem; color: #555; line-height: 1.75; margin-bottom: 32px; max-width: 400px; opacity: 0; animation: fadeUp 0.7s 0.4s forwards; }
+    .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.7s 0.55s forwards; }
+    .badge { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #e0e6ff; border-radius: 20px; padding: 7px 16px; font-size: 0.8rem; font-weight: 600; color: #3a5bd9; transition: all 0.2s; }
+    .badge:hover { border-color: #a78bfa; background: #f5f0ff; }
     .badge svg { width: 14px; height: 14px; stroke: #3a5bd9; fill: none; stroke-width: 2; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    .hero-right { display: flex; align-items: center; justify-content: center; padding: 40px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
-    .ian-card { background: rgba(255,255,255,0.96); border-radius: 16px; padding: 28px; width: 320px; box-shadow: 0 20px 60px rgba(0,0,0,0.22); }
+    .hero-right { display: flex; flex-direction: row; align-items: flex-start; justify-content: flex-start; padding: 48px 40px 48px 60px; gap: 24px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
+
+    /* Quote reel */
+    .quote-reel { width: 280px; flex-shrink: 0; }
+    .quote-reel-label { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: rgba(196,181,253,0.65); margin-bottom: 12px; }
+    .quote-slides { position: relative; min-height: 180px; }
+    .quote-slide { display: none; animation: qfade 0.4s ease; }
+    .quote-slide.active { display: block; }
+    @keyframes qfade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .quote-mark { font-size: 3rem; font-weight: 900; color: rgba(196,181,253,0.3); line-height: 0.8; margin-bottom: 8px; font-family: Georgia, serif; }
+    .quote-text { font-size: 0.82rem; color: rgba(255,255,255,0.88); line-height: 1.65; margin-bottom: 14px; font-style: italic; }
+    .quote-source { display: flex; align-items: center; gap: 10px; }
+    .quote-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .quote-name { font-size: 0.78rem; font-weight: 800; color: #fff; }
+    .quote-role { font-size: 0.65rem; color: rgba(196,181,253,0.65); margin-top: 1px; }
+    .quote-dots { display: flex; gap: 6px; margin-top: 14px; }
+    .qdot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25); cursor: pointer; transition: all 0.2s; border: none; padding: 0; }
+    .qdot.active { background: #c4b5fd; width: 18px; border-radius: 3px; }
+    .ian-card { background: rgba(255,255,255,0.97); border-radius: 20px; padding: 28px; width: 420px; box-shadow: 0 24px 64px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1); position: relative; }
+    /* accent bar top of card */
+    .ian-card::before { content: ''; position: absolute; top: 0; left: 24px; right: 24px; height: 3px; background: linear-gradient(90deg, #7c3aed, #a78bfa); border-radius: 0 0 3px 3px; }
     .ian-card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
-    .ian-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #1a1f3c, #6c47d4); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; color: #fff; flex-shrink: 0; }
-    .ian-name { font-weight: 700; font-size: 1rem; color: #1a1f3c; }
-    .ian-title { font-size: 0.78rem; color: #888; margin-top: 2px; }
-    .ian-mission-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #3a5bd9; margin-bottom: 8px; }
-    .ian-mission-text { font-size: 0.84rem; color: #555; line-height: 1.65; font-style: italic; }
-    .ian-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
-    .ian-stat { background: #f5f7ff; border-radius: 8px; padding: 10px 12px; text-align: center; }
-    .ian-stat-num { font-size: 1.3rem; font-weight: 700; color: #3a5bd9; }
-    .ian-stat-label { font-size: 0.72rem; color: #888; margin-top: 2px; }
+    .ian-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #1a1f3c, #6c47d4); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; color: #fff; flex-shrink: 0; }
+    .ian-name { font-weight: 800; font-size: 1rem; color: #1a1f3c; }
+    .ian-title { font-size: 0.75rem; color: #888; margin-top: 2px; }
+    .ian-mission-label { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #7c3aed; margin-bottom: 8px; }
+    .ian-mission-text { font-size: 0.82rem; color: #555; line-height: 1.65; font-style: italic; }
+    .ian-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+    .ian-stat { background: #f5f7ff; border-radius: 10px; padding: 10px 12px; text-align: center; transition: background 0.2s; }
+    .ian-stat:hover { background: #ede9fe; }
+    .ian-stat-num { font-size: 1.4rem; font-weight: 800; color: #6c47d4; }
+    .ian-stat-label { font-size: 0.68rem; color: #999; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
     .counters-section { padding: 50px 80px; background: #f7f9ff; border-top: 1px solid #e8eeff; border-bottom: 1px solid #e8eeff; }
     .counters-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; text-align: center; }
     .counter-item { padding: 20px; }
@@ -195,18 +219,19 @@
     .beyond-cta { text-align: center; margin-top: 48px; }
     .beyond-cta p { font-size: 0.9rem; opacity: 0.65; font-style: italic; }
     .brought-section { padding: 70px 80px; background: #fff; border-top: 1px solid #f0f0f0; }
-    .brought-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .brought-inner { max-width: 800px; margin: 0 auto; text-align: center; }
     .brought-inner .section-eyebrow { margin-bottom: 10px; }
     .brought-inner h2 { font-size: 1.8rem; font-weight: 700; color: #1a1f3c; margin-bottom: 14px; }
-    .brought-inner > p { font-size: 0.9rem; color: #888; line-height: 1.7; max-width: 560px; margin: 0 auto 48px; }
-    .partners-row { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
-    .partner-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    .partner-logo-box { width: 160px; height: 72px; border: 1.5px dashed #c0caf5; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #f7f9ff; transition: border-color 0.2s; }
-    .partner-logo-box:hover { border-color: #3a5bd9; }
-    .partner-logo-box span { font-size: 0.8rem; color: #bbb; font-style: italic; }
-    .partner-name { font-size: 0.78rem; color: #aaa; }
-    .partner-divider { width: 1px; height: 60px; background: #e8eeff; }
-    .brought-note { margin-top: 36px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; color: #b8860b; background: #fff8e1; border: 1px dashed #f5a623; border-radius: 6px; padding: 8px 14px; }
+    .brought-inner > p { font-size: 0.9rem; color: #888; line-height: 1.7; max-width: 500px; margin: 0 auto 48px; }
+    .presenter-row { display: flex; gap: 24px; justify-content: center; }
+    .presenter-card { flex: 1; max-width: 340px; background: #f7f5ff; border: 1px solid #ede9fe; border-radius: 16px; padding: 32px 28px; text-align: left; }
+    .presenter-tag { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #a78bfa; margin-bottom: 12px; }
+    .presenter-name { font-size: 1.3rem; font-weight: 700; color: #1a1f3c; margin-bottom: 4px; }
+    .presenter-role { font-size: 0.85rem; color: #6c47d4; font-weight: 600; margin-bottom: 14px; }
+    .presenter-bio { font-size: 0.83rem; color: #666; line-height: 1.65; margin-bottom: 20px; }
+    .presenter-linkedin { display: inline-flex; align-items: center; gap: 7px; background: transparent; border: 1.5px solid #c4b5fd; color: #6c47d4; font-size: 0.8rem; font-weight: 600; padding: 7px 16px; border-radius: 25px; cursor: pointer; transition: all 0.2s; text-decoration: none; }
+    .presenter-linkedin:hover { background: #6c47d4; color: #fff; border-color: #6c47d4; }
+    .presenter-linkedin svg { width: 14px; height: 14px; fill: currentColor; }
     footer { padding: 50px 80px 30px; background: #fff; border-top: 1px solid #f0f0f0; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 30px; }
     .footer-logo { font-size: 1.1rem; font-weight: 700; color: #1a1f3c; margin-bottom: 14px; display: block; }
@@ -229,9 +254,63 @@
     .reveal-left.visible { opacity: 1; transform: translateX(0); }
     .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .reveal-right.visible { opacity: 1; transform: translateX(0); }
-    .toast { position: fixed; bottom: 32px; right: 32px; z-index: 999; background: #1a1f3c; color: #fff; padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.18); transform: translateY(80px); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
+    .toast { position: fixed; bottom: 100px; right: 32px; z-index: 998; background: #1a1f3c; color: #fff; padding: 14px 22px; border-radius: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,0.18); transform: translateY(80px); opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .toast-accent { color: #00c9a7; font-weight: 700; }
+    .toast-accent { color: #a78bfa; font-weight: 700; }
+
+    /* ── SESSION NUDGE ── */
+    .session-nudge { position: fixed; bottom: 32px; left: 32px; z-index: 997; width: 300px; background: #fff; border-radius: 16px; box-shadow: 0 16px 48px rgba(0,0,0,0.14); border: 1px solid #ede9fe; overflow: hidden; transform: translateY(120px); opacity: 0; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease; }
+    .session-nudge.visible { transform: translateY(0); opacity: 1; }
+    .session-nudge.dismissed { transform: translateY(120px); opacity: 0; pointer-events: none; }
+    .nudge-bar { height: 3px; background: linear-gradient(90deg, #1a1f3c, #6c47d4, #a78bfa); }
+    .nudge-body { padding: 14px 16px 12px; }
+    .nudge-eyebrow { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #a78bfa; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .nudge-live { width: 6px; height: 6px; border-radius: 50%; background: #a78bfa; animation: pulse 2s infinite; flex-shrink: 0; }
+    .nudge-title { font-size: 0.88rem; font-weight: 800; color: #1a1f3c; margin-bottom: 4px; }
+    .nudge-desc { font-size: 0.75rem; color: #888; line-height: 1.5; margin-bottom: 12px; }
+    .nudge-actions { display: flex; align-items: center; justify-content: space-between; }
+    .nudge-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #1a1f3c, #6c47d4); color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 0.76rem; font-weight: 700; transition: opacity 0.2s; }
+    .nudge-btn:hover { opacity: 0.88; }
+    .nudge-btn svg { width: 12px; height: 12px; stroke: #fff; fill: none; stroke-width: 2.5; }
+    .nudge-dismiss { font-size: 0.7rem; color: #bbb; cursor: pointer; background: none; border: none; font-family: inherit; transition: color 0.2s; }
+    .nudge-dismiss:hover { color: #888; }
+    .chat-bubble { position: fixed; bottom: 32px; right: 32px; z-index: 1000; }
+    .chat-toggle { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #1a1f3c, #6c47d4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 28px rgba(108,71,212,0.45); transition: transform 0.2s, box-shadow 0.2s; }
+    .chat-toggle:hover { transform: scale(1.08); box-shadow: 0 12px 36px rgba(108,71,212,0.55); }
+    .chat-toggle svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; }
+    .chat-toggle .icon-close { display: none; }
+    .chat-bubble.open .icon-chat { display: none; }
+    .chat-bubble.open .icon-close { display: block; }
+    .chat-window { position: absolute; bottom: 70px; right: 0; width: 380px; height: 520px; background: #fff; border-radius: 20px; box-shadow: 0 24px 64px rgba(0,0,0,0.18); display: none; flex-direction: column; overflow: hidden; border: 1px solid #ede9fe; animation: chatIn 0.25s ease; }
+    @keyframes chatIn { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
+    .chat-bubble.open .chat-window { display: flex; }
+    .chat-header { background: linear-gradient(135deg, #1a1f3c, #3b1f6e); padding: 16px 18px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .chat-header-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(167,139,250,0.2); border: 1px solid rgba(167,139,250,0.3); display: flex; align-items: center; justify-content: center; }
+    .chat-header-icon svg { width: 18px; height: 18px; stroke: #c4b5fd; fill: none; stroke-width: 2; }
+    .chat-header-text h4 { font-size: 0.88rem; font-weight: 700; color: #fff; }
+    .chat-header-text p { font-size: 0.7rem; color: rgba(196,181,253,0.7); margin-top: 1px; }
+    .chat-dot { width: 7px; height: 7px; border-radius: 50%; background: #a78bfa; animation: pulse 2s infinite; margin-left: auto; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: #ede9fe; border-radius: 2px; }
+    .msg { max-width: 88%; padding: 10px 13px; border-radius: 14px; font-size: 0.82rem; line-height: 1.55; }
+    .msg.bot { background: #f5f0ff; color: #1a1f3c; border-bottom-left-radius: 4px; align-self: flex-start; }
+    .msg.user { background: linear-gradient(135deg, #3b1f6e, #6c47d4); color: #fff; border-bottom-right-radius: 4px; align-self: flex-end; }
+    .msg.typing { background: #f5f0ff; align-self: flex-start; padding: 12px 16px; }
+    .typing-dots { display: flex; gap: 4px; }
+    .typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: #a78bfa; animation: tdot 1.2s infinite; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes tdot { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+    .chat-suggestions { padding: 8px 16px; display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; border-top: 1px solid #f5f0ff; }
+    .chat-sugg { background: #f5f0ff; border: 1px solid #ddd6fe; color: #6c47d4; font-size: 0.72rem; font-weight: 600; padding: 5px 10px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .chat-sugg:hover { background: #ede9fe; }
+    .chat-input-row { padding: 12px 14px; display: flex; gap: 8px; border-top: 1px solid #f0f0f0; flex-shrink: 0; }
+    .chat-input { flex: 1; border: 1.5px solid #e8eeff; border-radius: 25px; padding: 9px 16px; font-size: 0.82rem; outline: none; font-family: inherit; transition: border-color 0.2s; }
+    .chat-input:focus { border-color: #a78bfa; }
+    .chat-send { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3b1f6e, #6c47d4); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity 0.2s; }
+    .chat-send:hover { opacity: 0.88; }
+    .chat-send svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2; }
   </style>
 </head>
 <body>
@@ -250,7 +329,7 @@
     <li><a href="#tracker">Tracker</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-cta">Get Access</button>
+  <button class="nav-cta" style="display:none">Get Access</button>
 </nav>
 
 <section class="hero" id="hero">
@@ -266,12 +345,95 @@
         <div class="badge"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> 6 Sessions</div>
       </div>
     </div>
-    <div class="hero-right">
+    <div class="hero-right" style="gap:24px;align-items:flex-start;padding-top:52px;">
+
+      <!-- QUOTE REEL -->
+      <div class="quote-reel" id="quoteReel">
+        <div class="quote-reel-label">Why AI Agents Matter</div>
+        <div class="quote-slides" id="quoteSlides">
+
+          <div class="quote-slide active">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">AI agents matter because they make AI executable: they manage context, trigger actions, integrate with systems, and enforce controls across end‑to‑end processes.</p>
+            <div class="quote-source">
+              <div class="quote-avatar" style="background:linear-gradient(135deg,#1a1f3c,#6c47d4)">EA</div>
+              <div>
+                <div class="quote-name">Eamonn Amro</div>
+                <div class="quote-role">Head of CM.AI · Accenture Capital Markets</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-slide">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">By this time next year, you'll have a team of agents working for you — an IT agent fixing tech glitches before you notice them, a supply chain agent preventing disruptions while you sleep.</p>
+            <div class="quote-source">
+              <div class="quote-avatar" style="background:linear-gradient(135deg,#0078d4,#00b4f0)">CL</div>
+              <div>
+                <div class="quote-name">Charles Lamanna</div>
+                <div class="quote-role">CVP, Business &amp; Industry Copilot · Microsoft</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-slide">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">Generative AI is going to reinvent virtually every customer experience we know, and enable altogether new ones about which we've only fantasized.</p>
+            <div class="quote-source">
+              <div class="quote-avatar" style="background:linear-gradient(135deg,#f90,#f60)">AJ</div>
+              <div>
+                <div class="quote-name">Andy Jassy</div>
+                <div class="quote-role">CEO · Amazon — 2025 Shareholder Letter</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-slide">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">Agentic AI will autonomously resolve 80% of common customer service issues without human intervention by 2029.</p>
+            <div class="quote-source">
+              <div class="quote-avatar" style="background:linear-gradient(135deg,#1a1f3c,#6c47d4)">G</div>
+              <div>
+                <div class="quote-name">Gartner</div>
+                <div class="quote-role">Research Prediction · March 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-slide">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">Before asking for more headcount and resources, teams must demonstrate why they cannot get what they want done using AI.</p>
+            <div class="quote-source">
+              <div class="quote-avatar" style="background:linear-gradient(135deg,#96bf48,#5a7d2a)">TL</div>
+              <div>
+                <div class="quote-name">Tobi Lütke</div>
+                <div class="quote-role">CEO · Shopify — Internal Memo, April 2025</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quote-slide">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">Artificial intelligence and generative AI may be the most important technology of any lifetime.</p>
+            <div class="quote-source">
+              <div class="quote-avatar" style="background:linear-gradient(135deg,#00a1e0,#1798c1)">MB</div>
+              <div>
+                <div class="quote-name">Marc Benioff</div>
+                <div class="quote-role">Chair &amp; CEO · Salesforce</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="quote-dots" id="quoteDots"></div>
+      </div>
+
+      <!-- IAN CARD -->
       <div class="ian-card">
         <div class="ian-card-top">
-          <div class="ian-avatar">IK</div>
+          <div class="ian-avatar">IH</div>
           <div>
-            <div class="ian-name">Ian K.</div>
+            <div class="ian-name">Ian Howie</div>
             <div class="ian-title">Capital Markets AI Lead &bull; Programme Director</div>
           </div>
         </div>
@@ -284,6 +446,7 @@
           <div class="ian-stat"><div class="ian-stat-num">1</div><div class="ian-stat-label">Live Tracker</div></div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -302,7 +465,7 @@
     <h2>What is the Capital Markets Agenda?</h2>
     <p class="highlight">A practitioner-first AI learning journey built specifically for capital markets professionals.</p>
     <p>The Capital Markets Agenda takes individuals and teams from foundational AI awareness through to hands-on agentic workflows — across two leading platforms, with a focus on real capital markets use cases. Each session builds on the last, culminating in Agentic Den labs where participants design and deploy AI agents for their day-to-day work.</p>
-    <span class="placeholder-note">&#9998; Content will be updated once the full one-pager is provided by Snarmi.</span>
+    
   </div>
   <div class="goals-grid">
     <div class="goal-card reveal" onclick="pulseGoal(this)">
@@ -551,7 +714,7 @@
       </div>
       <button class="tracker-btn" onclick="trackerClick()">Open Tracker &#8599;</button>
     </div>
-    <div class="tracker-placeholder-note">&#9998; Replace with the shared Excel file link once available.</div>
+    
   </div>
 </section>
 
@@ -560,26 +723,43 @@
   <h2 class="section-title reveal">And Beyond...</h2>
   <p class="section-sub reveal">The Agenda is just the beginning. Here's where the programme is heading once all six sessions are complete.</p>
   <div class="beyond-grid">
-    <div class="beyond-card reveal"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Advanced Agentic Workflows</h3><p>Multi-agent pipelines, orchestration, and AI systems that run autonomously across capital markets processes. Placeholder — to be confirmed.</p></div>
-    <div class="beyond-card reveal" style="transition-delay:0.1s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>Continuous Learning Pathway</h3><p>New sessions added as Copilot and Claude release capabilities relevant to capital markets. The programme evolves with the tools. Placeholder — to be confirmed.</p></div>
-    <div class="beyond-card reveal" style="transition-delay:0.2s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Community &amp; Peer Network</h3><p>Connect with other capital markets AI practitioners. Share agents, prompts, and lessons learned across the practice. Placeholder — to be confirmed.</p></div>
+    <div class="beyond-card reveal"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Advanced Agentic Workflows</h3><p>Multi-agent pipelines, orchestration, and AI systems that run autonomously across capital markets processes.</p></div>
+    <div class="beyond-card reveal" style="transition-delay:0.1s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>Continuous Learning Pathway</h3><p>New sessions added as Copilot and Claude release capabilities relevant to capital markets. The programme evolves with the tools.</p></div>
+    <div class="beyond-card reveal" style="transition-delay:0.2s"><div class="beyond-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><h3>Community &amp; Peer Network</h3><p>Connect with other capital markets AI practitioners. Share agents, prompts, and lessons learned across the practice.</p></div>
   </div>
-  <div class="beyond-cta reveal"><p>&#9998; This section will be expanded once final programme direction is confirmed by Snarmi.</p></div>
+  
 </section>
 
 <section class="brought-section" id="brought">
   <div class="brought-inner">
     <div class="section-eyebrow">In partnership</div>
     <h2 class="reveal">Brought to You By...</h2>
-    <p class="reveal">The Capital Markets AI Agenda is delivered in collaboration with leading organisations committed to AI enablement in financial services.</p>
-    <div class="partners-row reveal">
-      <div class="partner-placeholder"><div class="partner-logo-box"><span>Partner Logo</span></div><div class="partner-name">Organisation Name</div></div>
-      <div class="partner-divider"></div>
-      <div class="partner-placeholder"><div class="partner-logo-box"><span>Partner Logo</span></div><div class="partner-name">Organisation Name</div></div>
-      <div class="partner-divider"></div>
-      <div class="partner-placeholder"><div class="partner-logo-box"><span>Partner Logo</span></div><div class="partner-name">Organisation Name</div></div>
+    <p class="reveal">The Capital Markets AI Agenda is designed and delivered by the team at CM.AI.</p>
+    <div class="presenter-row reveal">
+
+      <div class="presenter-card">
+        <div class="presenter-tag">Session Designed &amp; Delivered By</div>
+        <div class="presenter-name">Rosalia Bhanley</div>
+        <div class="presenter-role">Management Consulting Analyst &middot; CM.AI</div>
+        <p class="presenter-bio">Have ideas or need support after today? Reach out on EID: <strong>rosalia.bhanley</strong></p>
+        <a href="https://www.linkedin.com/in/rosa-bhanley-1a7488232/" target="_blank" class="presenter-linkedin">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <div class="presenter-card">
+        <div class="presenter-tag">Session Designed &amp; Delivered By</div>
+        <div class="presenter-name">Saanvi Raghuwanshi</div>
+        <div class="presenter-role">Management Consulting Analyst &middot; CM.AI</div>
+        <p class="presenter-bio">Have ideas or need support after today? Reach out on EID: <strong>saanvi.raghuwanshi</strong></p>
+        <a href="#" class="presenter-linkedin">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
     </div>
-    <div class="brought-note reveal">&#9998; Add partner names, logos, and links once confirmed.</div>
   </div>
 </section>
 
@@ -587,7 +767,7 @@
   <div class="footer-grid">
     <div class="footer-brand reveal-left">
       <span class="footer-logo">Capital Markets <span>Agenda</span></span>
-      <p>A structured AI enablement programme for capital markets professionals, led by Ian K. in partnership with Snarmi.</p>
+      <p>A structured AI enablement programme for capital markets professionals, led by Ian Howie in partnership with CM.AI.</p>
       <p class="copy">&#169; 2026 Capital Markets AI Agenda. All rights reserved.</p>
     </div>
     <div class="reveal" style="transition-delay:0.1s">
@@ -603,8 +783,53 @@
       <div class="social-icons"><div class="soc li">in</div><div class="soc ms">M</div><div class="soc em">@</div></div>
     </div>
   </div>
-  <div class="footer-bottom">&#169; 2026 Capital Markets AI Agenda &bull; Placeholder content — final copy to be supplied by Snarmi.</div>
+  <div class="footer-bottom">&#169; 2026 Capital Markets AI Agenda</div>
 </footer>
+
+<!-- CHATBOT -->
+<div class="chat-bubble" id="chatBubble">
+  <div class="chat-window">
+    <div class="chat-header">
+      <div class="chat-header-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="chat-header-text">
+        <h4>Agenda Assistant</h4>
+        <p>Ask me anything about the programme</p>
+      </div>
+      <div class="chat-dot"></div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">👋 Hi! I'm the Capital Markets Agenda assistant. Ask me anything about the sessions, how to build an agent, what Copilot vs Claude does, or anything else about the programme.</div>
+    </div>
+    <div class="chat-suggestions">
+      <button class="chat-sugg" onclick="sendSugg(this)">What sessions are available?</button>
+      <button class="chat-sugg" onclick="sendSugg(this)">Copilot vs Claude?</button>
+      <button class="chat-sugg" onclick="sendSugg(this)">What is an Agentic Den?</button>
+      <button class="chat-sugg" onclick="sendSugg(this)">How do I build an agent?</button>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" type="text" placeholder="Ask a question..." onkeydown="if(event.key==='Enter') sendChat()">
+      <button class="chat-send" onclick="sendChat()"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="document.getElementById('chatBubble').classList.toggle('open')">
+    <svg class="icon-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <svg class="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
+<!-- SESSION NUDGE -->
+<div class="session-nudge" id="sessionNudge">
+  <div class="nudge-bar"></div>
+  <div class="nudge-body">
+    <div class="nudge-eyebrow"><div class="nudge-live"></div> Now Open</div>
+    <div class="nudge-title">Copilot Session 1 is live 🚀</div>
+    <div class="nudge-desc">Your step-by-step build guide, copyable prompts and test checklist are ready. Build your AI Secretary today.</div>
+    <div class="nudge-actions">
+      <a href="session-1-copilot.html" class="nudge-btn">Go to Session 1 <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <button class="nudge-dismiss" onclick="dismissNudge()">Dismiss</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"><span class="toast-accent" id="toastMsg"></span></div>
 
@@ -617,7 +842,7 @@
     {label:'Claude Workshop 2', val:'3 June', tag:'Coming Soon'},
     {label:'Claude Workshop 3', val:'10 June', tag:'Coming Soon'},
     {label:'Final Agent Den', val:'24 June', tag:'Showcase'},
-    {label:'Programme Lead', val:'Ian K.', tag:'Capital Markets AI'},
+    {label:'Programme Lead', val:'Ian Howie', tag:'Capital Markets AI'},
   ];
   const track = document.getElementById('tickerTrack');
   [...tickerItems,...tickerItems].forEach(t => {
@@ -659,6 +884,110 @@
     const s = 4 + Math.random() * 12;
     p.style.cssText = `width:${s}px;height:${s}px;left:${20+Math.random()*80}%;bottom:${Math.random()*40}px;animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*6}s`;
     grad.appendChild(p);
+  }
+
+  // Session nudge — appears after 2s if not previously dismissed
+  function dismissNudge() {
+    document.getElementById('sessionNudge').classList.add('dismissed');
+    sessionStorage.setItem('nudgeDismissed', '1');
+  }
+  if (!sessionStorage.getItem('nudgeDismissed')) {
+    setTimeout(() => document.getElementById('sessionNudge').classList.add('visible'), 2000);
+  }
+
+  // Quote carousel
+  const slides = document.querySelectorAll('.quote-slide');
+  const dotsContainer = document.getElementById('quoteDots');
+  let current = 0;
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'qdot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsContainer.appendChild(d);
+  });
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+  }
+  setInterval(() => goTo((current + 1) % slides.length), 5000);
+
+  // ── Chatbot ──
+  const SYSTEM_PROMPT = `You are a friendly assistant for the Capital Markets AI Agenda — a structured AI enablement programme run by CM.AI at Accenture for capital markets professionals.
+
+The programme covers:
+- Microsoft Copilot: 2 workshops (6 May, 13 May) + Mini Agentic Den (20 May)
+- Anthropic Claude: 3 workshops (27 May, 3 June, 10 June) + Final Agentic Den (24 June)
+- Sessions unlock as each date approaches
+- Each session has a dedicated page with step-by-step build guides, copyable prompts, and a test checklist
+- A live Agent Tracker (Excel) logs all agents built across the practice
+- Programme Director: Ian Howie (Capital Markets AI Lead)
+- Delivered by: Rosalia Bhanley and Saanvi Raghuwanshi (CM.AI, Accenture)
+
+Answer questions about sessions, dates, how to build agents, what Copilot vs Claude is good for, the Agentic Den format, prizes (Gilet for 1st, recognition points for 2nd/3rd), and the website features. Keep answers concise and friendly. If asked something outside the programme, politely redirect.`;
+
+  const chatHistory = [];
+
+  async function sendChat() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+    input.value = '';
+    addMsg(msg, 'user');
+    chatHistory.push({ role: 'user', content: msg });
+    const typingId = addTyping();
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 400,
+          system: SYSTEM_PROMPT,
+          messages: chatHistory
+        })
+      });
+      const data = await res.json();
+      const reply = data.content?.[0]?.text || 'Sorry, I couldn\'t get a response right now.';
+      chatHistory.push({ role: 'assistant', content: reply });
+      removeTyping(typingId);
+      addMsg(reply, 'bot');
+    } catch {
+      removeTyping(typingId);
+      addMsg('Sorry, something went wrong. Please try again.', 'bot');
+    }
+  }
+
+  function sendSugg(el) {
+    document.getElementById('chatInput').value = el.textContent;
+    sendChat();
+  }
+
+  function addMsg(text, role) {
+    const el = document.createElement('div');
+    el.className = `msg ${role}`;
+    el.textContent = text;
+    const msgs = document.getElementById('chatMessages');
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return el;
+  }
+
+  function addTyping() {
+    const id = Date.now();
+    const el = document.createElement('div');
+    el.className = 'msg typing'; el.dataset.id = id;
+    el.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+    const msgs = document.getElementById('chatMessages');
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return id;
+  }
+
+  function removeTyping(id) {
+    document.querySelector(`[data-id="${id}"]`)?.remove();
   }
 
   function showToast(msg) {
