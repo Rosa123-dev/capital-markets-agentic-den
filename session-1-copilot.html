@@ -390,11 +390,20 @@
       <div class="section-eyebrow">Watch first</div>
       <h2>Full Build Walkthrough</h2>
       <p>Watch the video to see the full build process in Copilot Studio before you start. Takes about 10 minutes — it'll save you time when you sit down to build.</p>
-      <button class="watch-btn" onclick="showToast('Video link coming soon — placeholder')"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="#fff" stroke="none"/></svg> Watch the video</button>
+      <button class="watch-btn" onclick="document.getElementById('sessionVideo').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="#fff" stroke="none"/></svg> Watch the video</button>
     </div>
     <div class="reveal-right">
-      <div class="watch-video-box">
-        <div class="watch-play" onclick="showToast('Video link coming soon — placeholder')"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+      <video
+        id="sessionVideo"
+        controls
+        style="width:100%;border-radius:14px;display:block;box-shadow:0 20px 48px rgba(0,0,0,0.3)"
+        poster=""
+        onerror="document.getElementById('videoFallback').style.display='flex';this.style.display='none'">
+        <source src="session-1-video.mp4" type="video/mp4">
+      </video>
+      <!-- shown if video file not found yet -->
+      <div id="videoFallback" class="watch-video-box" style="display:none">
+        <div class="watch-play"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
       </div>
     </div>
   </div>
