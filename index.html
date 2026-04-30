@@ -602,13 +602,13 @@
         <path d="M 430 28 Q 500 4 620 28" fill="none" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="6,4"/>
         <polygon points="620,28 612,22 612,34" fill="#c4b5fd"/>
       </svg>
-      <div class="session-card-new open" onclick="window.location.href='session-1-copilot.html'">
-        <div class="lock-badge open-b"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg> Open</div>
-        <div class="card-icon-wrap" style="background:linear-gradient(135deg,#0078d4,#00b4f0)">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <div class="session-card-new locked">
+        <div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div>
+        <div class="card-icon-wrap" style="background:#e8eeff">
+          <svg viewBox="0 0 24 24" style="stroke:#c0caf5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
         </div>
         <h3>Session 1</h3>
-        <p>Content and materials coming very soon — check back shortly.</p>
+        <p>Unlocks ahead of 6 May.</p>
       </div>
       <div class="session-card-new locked">
         <div class="lock-badge locked-b"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Locked</div>
@@ -826,7 +826,7 @@
     document.getElementById('sessionNudge').classList.add('dismissed');
     sessionStorage.setItem('nudgeDismissed', '1');
   }
-  if (!sessionStorage.getItem('nudgeDismissed')) {
+  if (false && !sessionStorage.getItem('nudgeDismissed')) {
     setTimeout(() => document.getElementById('sessionNudge').classList.add('visible'), 2000);
   }
 
